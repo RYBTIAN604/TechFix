@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SNAKE_DIAGNOSTIC | TechFix</title>
+    <style>
+        body { background: #000; color: #33ff00; font-family: monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        canvas { border: 2px solid #33ff00; background: #000; max-width: 90vw; max-height: 90vw; }
+        #controls { margin-top: 20px; display: grid; grid-template-areas: ". up ." "left . right" ". down ."; gap: 10px; }
+        .d-btn { width: 60px; height: 60px; background: #222; color: #33ff00; border: 1px solid #33ff00; border-radius: 10px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
+        .d-btn:active { background: #33ff00; color: #000; }
+        @media (min-width: 769px) { #controls { display: none; } }
+    </style>
+</head>
+<body>
+    <h2 id="msg">> SNAKE_OS</h2>
+    <canvas id="snakeGame" width="400" height="400"></canvas>
+    
+    <div id="controls">
+        <button style="grid-area: up" class="d-btn" onclick="move('UP')">▲</button>
+        <button style="grid-area: left" class="d-btn" onclick="move('LEFT')">◀</button>
+        <button style="grid-area: right" class="d-btn" onclick="move('RIGHT')">▶</button>
+        <button style="grid-area: down" class="d-btn" onclick="move('DOWN')">▼</button>
+    </div>
+
+    <p style="margin-top:20px; font-size:0.8rem">SCORE: <span id="score">0</span> | [ESC] to Exit</p>
+
+    <script>
+        const canvas = document.getElementById("snakeGame");
+        const ctx = canvas.getContext("2d");
+        const box = 20;
+        let snake = [{x: 10*box, y: 10*box}];
+        let food = {x: 5*box, y: 5*box};
+        let d = "RIGHT", nextD = "RIGHT", score = 0;
+
+        function move(dir) {
+            if(dir == "LEFT" && d != "RIGHT") nextD = "LEFT";
+            if(dir == "UP" && d != "DOWN") nextD = "UP";
+            if(dir == "RIGHT" && d != "LEFT") nextD = "RIGHT";
+            if(dir == "DOWN" && d != "UP") nextD = "DOWN";
+        }
+
+        document.addEventListener("keydown", e => {
+            if(e.keyCode == 37) move("LEFT");
+            if(e.keyCode == 38) move("UP");
+            if(e.keyCode == 39) move("RIGHT");
+            if(e.keyCode == 40) move("DOWN");
+            if(e.keyCode == 27) window.location.href='index.html';
+            if([37,38,39,40].includes(e.keyCode)) e.preventDefault();
+        });
+
+        function draw() {
+            d = nextD;
+            ctx.fillStyle = "black";
+            ctx.fillRect(0,0,400,400);
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, box, box);
+            for(let i=0; i<snake.length; i++) {
+                ctx.fillStyle = (i==0) ? "#33ff00" : "#005500";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+            }
+            let hX = snake[0].x, hY = snake[0].y;
+            if(d=="LEFT") hX-=box; if(d=="UP") hY-=box; if(d=="RIGHT") hX+=box; if(d=="DOWN") hY+=box;
+
+            if(hX<0 || hX>=400 || hY<0 || hY>=400 || snake.some(s=>s.x===hX && s.y===hY)) {
+                clearInterval(game);
+                alert("CRITICAL_COLLISION. Score: " + score);
+                location.reload();
+                return;
+            }
+            if(hX==food.x && hY==food.y) {
+                score++; document.getElementById("score").innerText = score;
+                food = {x: Math.floor(Math.random()*20)*box, y: Math.floor(Math.random()*20)*box};
+            } else { snake.pop(); }
+            snake.unshift({x: hX, y: hY});
+        }
+        let game = setInterval(draw, 100);
+    </script>
+</body>
+</html>

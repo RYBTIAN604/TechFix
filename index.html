@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFix | PC & Mobile Solutions Philippines</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">TECH<span>FIX</span></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <div class="hero-content">
+            <h1>Professional Hardware Repair</h1>
+            <p>Component-level mobile repairs, Kali Linux setups, and high-performance "Frankenstein" builds.</p>
+            <button class="btn" onclick="scrollToContact()">Get a Quote</button>
+        </div>
+    </header>
+
+    <section id="services">
+        <h2 class="section-title">Our Services</h2>
+        <div class="service-container">
+            <div class="card" onclick="scrollToContact()">
+                <div class="icon">🖥️</div>
+                <h3>Hardware Repair</h3>
+                <p>LCD replacements, motherboard soldering, and battery swaps for Samsung, Cherry Mobile, and Laptops.</p>
+            </div>
+            <div class="card" onclick="scrollToContact()">
+                <div class="icon">⚙️</div>
+                <h3>Software & OS</h3>
+                <p>OS reformatting, debloating, and Kali Linux VirtualBox configurations for security students.</p>
+            </div>
+            <div class="card" onclick="scrollToContact()">
+                <div class="icon">🧪</div>
+                <h3>Custom Builds</h3>
+                <p>Gaming rigs and hybrid mobile builds using high-spec parts sourced from Shopee and Lazada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="alt-bg">
+        <h2 class="section-title">Send an Inquiry</h2>
+        <form id="contactForm">
+            <input type="text" id="model" placeholder="Device Model (e.g., Galaxy A04s)" required>
+            <input type="email" id="email" placeholder="Your Email Address" required>
+            <textarea id="issue" placeholder="Describe the issue or the custom build you're looking for..." rows="5" required></textarea>
+            <button type="submit" class="btn">Submit Ticket</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2026 TechFix Philippines | Quality Tech Support</p>
+        <p id="easter-egg" onclick="window.location.href='snake.html'">SYSTEM_STATUS: <span class="status-ok">ONLINE</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
